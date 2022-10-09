@@ -1,0 +1,13 @@
+/*Mixin Declarations [Re-Usable Components] */
+@mixin flexcenter-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+@mixin flexcenter-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

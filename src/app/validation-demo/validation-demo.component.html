@@ -1,0 +1,101 @@
+<p-toast [style]="{ marginTop: '80px' }"></p-toast>
+
+<form [formGroup]="userform" (ngSubmit)="onSubmit(userform.value)">
+  <div class="form-group">
+    Value: {{ userform.value | json }}
+
+    <hr />
+  </div>
+  <p-panel header="Basic Details">
+    <div class="p-fluid forms-grid" style="margin: 1em 0">
+      <div class="form-group">
+        <span class="p-float-label">
+          <input
+            id="float-input"
+            type="email"
+            class="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            pInputText
+            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+            formControlName="email"
+          />
+          <p-message
+            severity="error"
+            text="Valid Email is Required"
+            *ngIf="
+              !userform.controls['email'].valid &&
+              userform.controls['email'].dirty
+            "
+          ></p-message>
+          <label for="float-input exampleInputEmail1">Enter email</label>
+        </span>
+      </div>
+      <br />
+      <div class="form-group green-border-focus">
+        <textarea
+          class="form-control"
+          id="exampleFormControlTextarea5"
+          rows="3"
+          pInputTextarea
+          type="text"
+          placeholder="your message..."
+          formControlName="message"
+        ></textarea>
+        <p-message
+          severity="error"
+          [text]="
+            userform.controls['message'].errors['required']
+              ? 'Password is required'
+              : userform.controls['message'].errors['minlength']
+              ? 'Must have atleast 6 characters'
+              : ''
+          "
+          *ngIf="
+            !userform.controls['message'].valid &&
+            userform.controls['message'].dirty
+          "
+        ></p-message>
+      </div>
+      <br />
+      <div class="form-group">
+        <p-dropdown
+          [options]="careers"
+          [(ngModel)]="selectedCareer"
+          optionLabel="job"
+          formControlName="careers"
+          placeholder="Please select your career..."
+        ></p-dropdown>
+        <p-message
+          severity="error"
+          text="Please select any option from the list"
+          *ngIf="
+            !userform.controls['careers'].valid &&
+            userform.controls['careers'].dirty
+          "
+        ></p-message>
+      </div>
+      <br />
+      <div>
+        <button
+          pButton
+          type="submit"
+          label="Submit"
+          [disabled]="!userform.valid"
+          class="ui-button-raised ui-button-primary"
+        ></button>
+      </div>
+
+      <div style="text-align: center; margin-top: 20px" *ngIf="submitted">
+        Form Submitted
+        <br />
+        {{ diagnostic }}
+      </div>
+    </div>
+  </p-panel>
+</form>
+<br />
+<a routerLink="/">Go Back to Home</a>
+<br />
+<br />
+<a routerLink="/reactive-home">Go Back to Reactive Home Base</a>

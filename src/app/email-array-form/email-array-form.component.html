@@ -1,0 +1,125 @@
+<h1>Dynamic Forms with FormArray [Emails]</h1>
+<p-toast [style]="{ marginTop: '80px' }"></p-toast>
+<form [formGroup]="myForm">
+  Value: {{ myForm.value | json }}
+
+  <hr />
+  <span class="p-float-label">
+    <input
+      id="float-input-2"
+      type="text"
+      class="form-control"
+      aria-describedby="emailHelp"
+      pInputText
+      formControlName="firstname"
+      placeholder="Enter Firstname"
+    />
+    <p-message
+      severity="error"
+      [text]="
+        myForm.controls['firstname'].errors['required']
+          ? 'Firstname is required'
+          : myForm.controls['firstname'].errors['minlength']
+          ? 'Must have atleast 3 characters'
+          : ''
+      "
+      *ngIf="
+        !myForm.controls['firstname'].valid &&
+        myForm.controls['firstname'].dirty
+      "
+    ></p-message>
+    <input
+      id="float-input-3"
+      type="text"
+      class="form-control"
+      id="exampleInputEmail3"
+      aria-describedby="emailHelp"
+      pInputText
+      formControlName="lastname"
+      placeholder="Enter Lastname"
+    />
+    <p-message
+      severity="error"
+      [text]="
+        myForm.controls['lastname'].errors['required']
+          ? 'Lastname is required'
+          : myForm.controls['lastname'].errors['minlength']
+          ? 'Must have atleast 3 characters'
+          : ''
+      "
+      *ngIf="
+        !myForm.controls['lastname'].valid && myForm.controls['lastname'].dirty
+      "
+    ></p-message>
+
+    <input
+      id="float-input-4"
+      type="text"
+      class="form-control"
+      aria-describedby="emailHelp"
+      pInputText
+      formControlName="gender"
+      placeholder="Enter Gender"
+    />
+    <p-message
+      severity="error"
+      text="Valid Gender is Required"
+      *ngIf="
+        !myForm.controls['gender'].valid && myForm.controls['gender'].dirty
+      "
+    ></p-message>
+    <input
+      id="float-input-5"
+      type="number"
+      class="form-control"
+      id="exampleInputEmail3"
+      aria-describedby="emailHelp"
+      pInputText
+      formControlName="age"
+      placeholder="Enter Age"
+    />
+    <p-message
+      severity="error"
+      text="Valid Age is Required"
+      *ngIf="!myForm.controls['age'].valid && myForm.controls['age'].dirty"
+    ></p-message>
+  </span>
+  <div formArrayName="emails">
+    <div *ngFor="let email of emailForms.controls; let i = index">
+      <input
+        id="float-input"
+        type="email"
+        class="form-control"
+        aria-describedby="emailHelp"
+        pInputText
+        pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+        [formControlName]="i"
+        placeholder="Enter email"
+      />
+      <p-message
+        severity="error"
+        text="Valid Email is Required"
+        *ngIf="email.errors?.required && email.dirty"
+      ></p-message>
+      <button
+        pButton
+        type="submit"
+        label="Delete"
+        (click)="deleteEmail(i)"
+        class="ui-button-raised ui-button-primary"
+      ></button>
+    </div>
+  </div>
+  <button
+    pButton
+    type="submit"
+    label="Add Email"
+    (click)="addEmail()"
+    class="ui-button-raised ui-button-primary"
+  ></button>
+</form>
+<br />
+<a routerLink="/">Go Back to Home</a>
+<br />
+<br />
+<a routerLink="/reactive-home">Go Back to Reactive Home Base</a>

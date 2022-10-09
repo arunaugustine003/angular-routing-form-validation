@@ -1,0 +1,115 @@
+<h1>Dynamic Forms with FormArray [Phones]</h1>
+<p-toast [style]="{ marginTop: '80px' }"></p-toast>
+<form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)">
+  Value: {{ myForm.value | json }}
+
+  <hr />
+  <p-panel header="Basic Details">
+    <span class="p-float-label">
+      <input
+        id="float-input"
+        type="email"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        pInputText
+        pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+        formControlName="email"
+      />
+      <p-message
+        severity="error"
+        text="Valid Email is Required"
+        *ngIf="
+          !myForm.controls['email'].valid && myForm.controls['email'].dirty
+        "
+      ></p-message>
+    </span>
+    <div formArrayName="phones">
+      <div
+        *ngFor="let phone of phoneForms.controls; let i = index"
+        [formGroupName]="i"
+      >
+        <input
+          id="float-input-2"
+          type="text"
+          class="form-control"
+          id="exampleInputEmail2"
+          aria-describedby="emailHelp"
+          pInputText
+          formControlName="area"
+          placeholder="Enter Area"
+        />
+        <p-message
+          severity="error"
+          text="Valid Area is Required"
+          *ngIf="
+            phone.controls['area'].errors?.required &&
+            phone.controls['area'].dirty
+          "
+        ></p-message>
+
+        <input
+          id="float-input-3"
+          type="text"
+          class="form-control"
+          id="exampleInputEmail3"
+          aria-describedby="emailHelp"
+          pInputText
+          formControlName="prefix"
+          placeholder="Enter Prefix"
+        />
+        <p-message
+          severity="error"
+          text="Valid Prefix is Required"
+          *ngIf="
+            phone.controls['prefix'].errors?.required &&
+            phone.controls['prefix'].dirty
+          "
+        ></p-message>
+        <input
+          id="float-input-4"
+          type="text"
+          class="form-control"
+          id="exampleInputEmail3"
+          aria-describedby="emailHelp"
+          pInputText
+          formControlName="line"
+          placeholder="Enter Line"
+        />
+        <p-message
+          severity="error"
+          text="Valid Line is Required"
+          *ngIf="
+            phone.controls['line'].errors?.required &&
+            phone.controls['line'].dirty
+          "
+        ></p-message>
+        <button
+          pButton
+          label="Delete"
+          (click)="deletePhone(i)"
+          class="ui-button-raised ui-button-primary"
+        ></button>
+      </div>
+    </div>
+    <button
+      pButton
+      label="Add Phone Number"
+      (click)="addPhone()"
+      type="submit"
+      [disabled]="!myForm.valid"
+      class="ui-button-raised ui-button-primary"
+    ></button>
+
+    <div style="text-align: center; margin-top: 20px" *ngIf="submitted">
+      Form Submitted
+      <br />
+      {{ diagnostic }}
+    </div>
+  </p-panel>
+</form>
+<br />
+<a routerLink="/">Go Back to Home</a>
+<br />
+<br />
+<a routerLink="/reactive-home">Go Back to Reactive Home Base</a>

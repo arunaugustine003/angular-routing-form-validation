@@ -1,0 +1,85 @@
+<p-toast [style]="{ marginTop: '80px' }"></p-toast>
+<form
+  [formGroup]="userform"
+  *ngIf="hasRoute('/contact')"
+  onsubmit="return confirm('Data Submission Successful ✔');"
+  (ngSubmit)="onSubmit(userform.value)"
+>
+  <p-panel header="Basic Details">
+    <div class="p-fluid forms-grid" style="margin: 1em 0">
+      <div class="form-group">
+        <span class="p-float-label">
+          <input
+            id="float-input"
+            type="text"
+            class="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            pInputText
+            formControlName="name"
+          />
+          <p-message
+            severity="error"
+            [text]="
+              userform.controls['name'].errors['required']
+                ? 'Name is required'
+                : userform.controls['name'].errors['minlength']
+                ? 'Must have atleast 4 characters'
+                : ''
+            "
+            *ngIf="
+              !userform.controls['name'].valid &&
+              userform.controls['name'].dirty
+            "
+          ></p-message>
+          <label for="float-input exampleInputEmail1">Enter name</label>
+        </span>
+      </div>
+      <br />
+      <span class="p-float-label">
+        <input
+          id="float-input"
+          type="text"
+          class="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+          pInputText
+          formControlName="comment"
+        />
+        <p-message
+          severity="error"
+          [text]="
+            userform.controls['comment'].errors['required']
+              ? 'Name is required'
+              : userform.controls['comment'].errors['minlength']
+              ? 'Must have atleast 6 characters'
+              : ''
+          "
+          *ngIf="
+            !userform.controls['comment'].valid &&
+            userform.controls['comment'].dirty
+          "
+        ></p-message>
+        <label for="float-input exampleInputEmail1">Enter Comment</label>
+      </span>
+      <br />
+      <div>
+        <button
+          pButton
+          type="submit"
+          label="Submit"
+          [disabled]="!userform.valid"
+          class="ui-button-raised ui-button-primary"
+        ></button>
+      </div>
+
+      <div style="text-align: center; margin-top: 20px" *ngIf="submitted">
+        Form Submitted
+        <br />
+        {{ diagnostic }}
+      </div>
+    </div>
+  </p-panel>
+</form>
+<br />
+<a routerLink="/">Go Back to Home</a>

@@ -1,0 +1,88 @@
+@import "./../../../variables";
+@import "./../../../mixins";
+
+.todo {
+  @include flexcenter-row();
+  padding: 10px 15px;
+  margin: 0px 150px;
+  background-color: $white-primary;
+  border-bottom: 1px solid $grey-light;
+  .id {
+    flex: 1 1 50px;
+    font-size: 20px;
+  }
+  .content {
+    flex: 1 1 100%;
+    font-size: 20px;
+    cursor: crosshair;
+  }
+  &:nth-child(even) {
+    background-color: #eee;
+  }
+
+  &:last-of-type {
+    border-bottom: 0;
+  }
+}
+
+.todo.done .content {
+  text-decoration: line-through;
+}
+form {
+  @include flexcenter-column();
+}
+.todo-input {
+  width: 50%;
+  height: 40px;
+  appearance: none;
+  border: none;
+  background-color: #f3f3f3;
+  margin-top: 15px;
+  font-size: 20px;
+  outline: none;
+  &::placeholder {
+    padding-left: 10px;
+  }
+}
+
+.todo-submit {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  appearance: none;
+  border: none;
+  outline: none;
+  background: none;
+  background-color: $pink-primary;
+  color: $white-primary;
+  margin: 15px auto;
+  padding: 10px 15px;
+  font-size: 18px;
+  font-weight: 700;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+  &:active {
+    cursor: pointer;
+  }
+}
+.delete {
+  display: block;
+  cursor: pointer;
+  width: 100%;
+  max-width: 100px;
+  appearance: none;
+  border: none;
+  outline: none;
+  background: none;
+  background-color: $pink-primary;
+  color: $white-primary;
+  margin: 5px auto;
+  padding: 10px 0px;
+  font-size: 18px;
+  font-weight: 700;
+  i {
+    color: $white-primary;
+  }
+}
